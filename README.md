@@ -9,6 +9,8 @@ npm install
 npm start
 ```
 
+Go to ```http://locahost:3000```
+
 ##stack
 
 * webpack with hotreload

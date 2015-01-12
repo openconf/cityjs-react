@@ -14,7 +14,7 @@ require.extensions['.scss'] = function(){
 } 
 
 var clientAppMiddleware = require("./src/main");
-//app.use(express.static("./assets"));
+
 app.use(session({keys:['app']}))
 
 app.use(bodyParser.json());

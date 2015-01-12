@@ -35,6 +35,8 @@ appStart();
 
 var Html = require('./components/layout');
 
+//*********************************************************
+// this will be hidden in framework
 // inject routes, appActions, Html
 function appStart(){
   var parsedRoutes = [];
@@ -57,9 +59,6 @@ function appStart(){
   app.initApp(appHandler(function(err){
     React.render(this.Handler(), document.body);
   }));
-
-
-
 
   function appHandler(renderStuff){
     return function (Handler, state){
