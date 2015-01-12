@@ -5,7 +5,7 @@ var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
 var Navigation = Router.Navigation;
 var ContextMixin = require("../../lib/grailjs/ContextMixin");
-var PromisePiper = require("../../lib/grailjs/PromisePiper");
+
 
 module.exports = React.createClass({
   mixins: [Navigation, ContextMixin],
@@ -13,7 +13,7 @@ module.exports = React.createClass({
   render: function () {
     return (
       <div className="container">
-        
+        <RouteHandler/>
       </div>
     );
   }

@@ -9,7 +9,11 @@ var bodyParser = require('body-parser');
 require('node-jsx').install({harmony: true, extension: '.js'})
 process.env.HOSTNAME = "http://localhost:3000"
 
-var clientAppMiddleware = require("./src/main.js");
+require.extensions['.scss'] = function(){
+	return null;
+} 
+
+var clientAppMiddleware = require("./src/main");
 //app.use(express.static("./assets"));
 app.use(session({keys:['app']}))
 

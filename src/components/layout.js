@@ -9,10 +9,9 @@ render: function() {
       <head>
         <title>{ this.props.title }</title>
         <link rel="icon" type="image/png" href="/images/favicon.png" />
-        <link rel="stylesheet" href="/css/main.css" />
       </head>
       <body dangerouslySetInnerHTML={{__html: this.props.markup}}></body>
-        <script src="/js/main.js"></script>
+      <script src="/js/main.js"></script>
       </html>
   );
 }

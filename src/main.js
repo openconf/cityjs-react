@@ -8,8 +8,16 @@ var Promise = require('es6-promise').Promise;
 var RouteHandler = require('../lib/grailjs/RouteHandler');
 var ReactRouterAdapter = require("../lib/grailjs/ReactRouterAdapter");
 
+require("./styles/main.scss");
+//require('bootstrap-sass/assets/stylesheets/_bootstrap.scss');
+var AppComponent = require('./components/app');
 
-var routes = require('./routes');
+var routes = (
+  <Route handler={AppComponent}>
+    {require('./modules/events/events.js')}
+  </Route>
+);
+
 
 // create app Actions
 var appActions = require("../lib/grailjs/Actions")();
@@ -26,6 +34,8 @@ var app = createApp(appCfg);
 appStart();
 
 var Html = require('./components/layout');
+
+// inject routes, appActions, Html
 function appStart(){
   var parsedRoutes = [];
   // parse routes for
@@ -33,17 +43,13 @@ function appStart(){
     appActions.actionsRouter.create(route.path, route.action);
   })
 
-  //Read Template
-  //if(RouteHandler.isServer) var indexTemplate = require('fs').readFileSync("./index.html")
-
-
   module.exports =  function(req, res, next){
     // render as HTML
     app.renderUrl(req, appHandler(function(err){
       if(err) return next(); // put custom error handling here, so far only 404
       var renderedApp = React.renderToString(this.Handler());
-      var html = React.renderToStaticMarkup(Html({title: 'title', markup :renderedApp}));
-      res.end(html);
+      var html = React.renderToStaticMarkup(React.createFactory(Html)({title: 'title', markup :renderedApp}));
+      res.end('<!DOCTYPE html>' + html);
     }));
   }
 
@@ -61,12 +67,12 @@ function appStart(){
         return renderStuff(new Error("404"));
       }
       state.$render = function(){
-        console.log("RENDER");
         state.routeAction = false;
         var doAction = appActions.withContext(state).doAction;
         React.withContext({doAction:doAction, stores: state.stores},
           renderStuff.bind({Handler:Handler, stores: state.stores}));
       }
+      //get matched path's
       var urlsMatched = state.routes.map(function(route){
         return route.path;
       });

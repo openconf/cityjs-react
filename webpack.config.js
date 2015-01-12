@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
   // Entry point for static analyzer:
@@ -37,7 +38,16 @@ module.exports = {
         test: /\.js$/,
         loaders: ['react-hot', 'jsx?harmony'],
         exclude: /node_modules[\\\/]react(-router)?[\\\/]/
-      }
+      },
+      {
+        test: /\.scss$/,
+        // Query parameters are passed to node-sass
+        loader: "style!css!sass?outputStyle=expanded&" +
+          "includePaths[]=" +
+            (path.resolve(__dirname, "./bower_components")) + "&" +
+          "includePaths[]=" +
+            (path.resolve(__dirname, "./node_modules"))
+      }      
     ]
   },
   devtool: "#inline-source-map",
