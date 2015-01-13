@@ -24,7 +24,52 @@ require('./dev-tools');
 app.use('/js', function (req, res) {
   res.redirect('http://localhost:3001/js' + req.path);
 });
+//*******************************************
+//temporary mock
+	      
+var Events = [
+	  {
+	    name: "KyivJs",
+	    logo: "http://placehold.it/100x100",
+	    description: "Best conference ever",
+	    date: new Date()
+	  },
+	  {
+	    name: "OdessaJs",
+	    logo: "http://placehold.it/100x100",
+	    description: "Best conference ever",
+	    date: new Date()
+	  },
+	  {
+	    name: "KharkivJs",
+	    logo: "http://placehold.it/100x100",
+	    description: "Best conference ever",
+	    date: new Date()
+	  }
+	];
 
+app.use(bodyParser.json());
+app.get("/api/events", function(req, res){
+	res.json(Events);
+});
+
+app.post("/api/events", function(req, res){
+	var User = req.body;
+	User.id = Users.length;
+	Users.push(User)
+	res.json(User);
+});
+
+app.put("/api/users/:id", function(req, res){
+	var newUser = req.body;
+	Users[newUser.id] = newUser;
+	res.json(newUser);
+});
+
+app.get("/api/users/:id", function(req, res){
+	res.json(Users[req.params.id]);
+});
+//*******************************************
 
 app.use(clientAppMiddleware);
 

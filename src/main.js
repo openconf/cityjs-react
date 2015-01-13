@@ -3,24 +3,29 @@ var Router = require('react-router');
 var Route = Router.Route;
 var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
+var DocumentTitle = require('react-document-title');
 
 var Promise = require('es6-promise').Promise;
 var RouteHandler = require('../lib/grailjs/RouteHandler');
 var ReactRouterAdapter = require("../lib/grailjs/ReactRouterAdapter");
+
+
+var appActions = require("./config");
+
+
 
 require("./styles/main.scss");
 //require('bootstrap-sass/assets/stylesheets/_bootstrap.scss');
 var AppComponent = require('./components/app');
 
 var routes = (
-  <Route handler={AppComponent}>
+  <Route path="/" handler={AppComponent}>
     {require('./modules/events/events.js')}
   </Route>
 );
 
 
-// create app Actions
-var appActions = require("../lib/grailjs/Actions")();
+
 //configure APP
 var appCfg = {
   router: ReactRouterAdapter.routerAdapter(routes)
@@ -43,14 +48,16 @@ function appStart(){
   // parse routes for
   ReactRouterAdapter.parseActions(routes).forEach(function(route){
     appActions.actionsRouter.create(route.path, route.action);
+    parsedRoutes.push(route.path);
   })
 
   module.exports =  function(req, res, next){
     // render as HTML
     app.renderUrl(req, appHandler(function(err){
       if(err) return next(); // put custom error handling here, so far only 404
+      var title  = DocumentTitle.rewind();
       var renderedApp = React.renderToString(this.Handler());
-      var html = React.renderToStaticMarkup(React.createFactory(Html)({title: 'title', markup :renderedApp}));
+      var html = React.renderToStaticMarkup(React.createFactory(Html)({title: title, markup :renderedApp}));
       res.end('<!DOCTYPE html>' + html);
     }));
   }
@@ -79,7 +86,6 @@ function appStart(){
         if(!!~parsedRoutes.indexOf(path)) newUrlsMatched.push(path);
         return newUrlsMatched;
       }, []);
-
       state.routeAction = true;
       if(urlsMatched.length > 0){
         appActions.doAction.call(state, urlsMatched, null, state);
