@@ -11,6 +11,9 @@ process.env.HOSTNAME = "http://localhost:3000"
 
 require.extensions['.scss'] = function(){
 	return null;
+}
+require.extensions['.less'] = function(){
+	return null;
 } 
 
 var clientAppMiddleware = require("./src/main");

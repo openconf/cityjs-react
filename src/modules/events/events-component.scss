@@ -1,0 +1,17 @@
+@import "bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+.events-component{
+	.event-item {
+		margin: $padding-base-horizontal $padding-base-horizontal;
+	}
+	.event-logo{
+		img {
+			width: 100%;
+		} 
+	}
+	.event-details {
+		h3{
+			margin: 0;
+		}
+	}
+}

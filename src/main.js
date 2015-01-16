@@ -25,7 +25,6 @@ var routes = (
 );
 
 
-
 //configure APP
 var appCfg = {
   router: ReactRouterAdapter.routerAdapter(routes)
@@ -42,11 +41,16 @@ var Html = require('./components/layout');
 
 //*********************************************************
 // this will be hidden in framework
-// inject routes, appActions, Html
+// inject app, routes, appActions, Html
 function appStart(){
   var parsedRoutes = [];
   // parse routes for
   ReactRouterAdapter.parseActions(routes).forEach(function(route){
+    if(route.stores) {
+      route.stores.forEach(function(store){
+        app.use(store);
+      });
+    }
     appActions.actionsRouter.create(route.path, route.action);
     parsedRoutes.push(route.path);
   })
@@ -79,9 +83,14 @@ function appStart(){
           renderStuff.bind({Handler:Handler, stores: state.stores}));
       }
       //get matched path's
-      var urlsMatched = state.routes.map(function(route){
-        return route.path;
+      var urlsMatched = []
+      state.routes.forEach(function(route){
+        if(route.defaultRoute && !~urlsMatched.indexOf(route.path + "/$default")) {
+          urlsMatched.push(route.path + "$default")
+        };
+        if(!~urlsMatched.indexOf(route.path)) urlsMatched.push(route.path);
       });
+      console.log(urlsMatched)
       urlsMatched = urlsMatched.reduce(function(newUrlsMatched, path){
         if(!!~parsedRoutes.indexOf(path)) newUrlsMatched.push(path);
         return newUrlsMatched;

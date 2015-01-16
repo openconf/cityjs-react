@@ -6,7 +6,7 @@ var DefaultRoute = Router.DefaultRoute;
 var Navigation = Router.Navigation;
 var PromisePiper = require("../../../lib/grailjs/PromisePiper");
 var ContextMixin = require("../../../lib/grailjs/ContextMixin");
-
+var EventsStore = require('./EventsStore');
 
 
 
@@ -14,10 +14,8 @@ var getEvents = PromisePiper().get('/api/events').emit('events:get');
 
 
 module.exports = [
-				<Route name="events" path="events" handler = {require('./EventsComponent')} action={getEvents}/>
-				,<Route name="event" path="event"  path="event/:id" handler = {require('./EventComponent')} />
-				]
+	<DefaultRoute handler = {require('./EventsComponent')} action={getEvents} stores={EventsStore} />
+	,<Route name="events" path="events" handler = {require('./EventsComponent')} action={getEvents} stores={EventsStore}/>
+	,<Route name="event" path="event"  path="event/:id" handler = {require('./EventComponent')} />
+	]
 		
-		
-
-

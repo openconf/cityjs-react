@@ -35,7 +35,7 @@ module.exports = {
     loaders: [
       // Pass *.jsx files through jsx-loader transform
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: ['react-hot', 'jsx?harmony'],
         exclude: /node_modules[\\\/]react(-router)?[\\\/]/
       },
@@ -47,7 +47,13 @@ module.exports = {
             (path.resolve(__dirname, "./bower_components")) + "&" +
           "includePaths[]=" +
             (path.resolve(__dirname, "./node_modules"))
-      }      
+      },
+      {
+        test: /\.less$/,
+        loader: "style!css!less"
+      },
+      { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
     ]
   },
   devtool: "#inline-source-map",
