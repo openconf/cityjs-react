@@ -35,19 +35,19 @@ var Events = [
 	    name: "KyivJs",
 	    logo: "http://placehold.it/100x100",
 	    description: "Best conference ever",
-	    date: new Date()
+	    date: new Date(Date.now() + 86400000 * Math.random() * 30)
 	  },
 	  {
 	    name: "OdessaJs",
 	    logo: "http://placehold.it/100x100",
 	    description: "Best conference ever",
-	    date: new Date()
+	    date: new Date(Date.now() + 86400000 * Math.random() * 30)
 	  },
 	  {
 	    name: "KharkivJs",
 	    logo: "http://placehold.it/100x100",
 	    description: "Best conference ever",
-	    date: new Date()
+	    date: new Date(Date.now() + 86400000 * Math.random() * 30)
 	  }
 	];
 

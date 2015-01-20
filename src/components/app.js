@@ -25,8 +25,9 @@ module.exports = React.createClass({
                 <Link to="/events" className="navbar-brand">Events</Link>
               </li>
             </ul>
-            <div className="navbar-right">
-              <Link to="/events/create" className="btn btn-default">ADD EVENT</Link>
+            <div className="navbar-right ">
+              <Link to="/event/create" className="btn btn-default">ADD EVENT</Link>
+              <Link to="/signup" className="btn btn-default">SIGNUP</Link>
             </div>
             
           </div>

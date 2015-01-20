@@ -84,8 +84,10 @@ function appStart(){
       }
       //get matched path's
       var urlsMatched = []
-      state.routes.forEach(function(route){
-        if(route.defaultRoute && !~urlsMatched.indexOf(route.path + "/$default")) {
+      state.routes.forEach(function(route, i){
+        if(route.defaultRoute 
+            && !~urlsMatched.indexOf(route.path + "/$default")
+            && (state.routes[state.routes.length - 1].path == route.path)) {
           urlsMatched.push(route.path + "$default")
         };
         if(!~urlsMatched.indexOf(route.path)) urlsMatched.push(route.path);

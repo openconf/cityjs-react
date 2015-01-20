@@ -1,0 +1,39 @@
+@import "bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+.calendar-component {
+	width: 100%;
+	border-color: $gray-light;
+	border-style: none solid solid none;
+	border-width: 1px;
+	.month-day{
+		width: 14.28%;
+		display: inline-block;
+	}
+	.focused {
+		background-color: $brand-success;
+	}
+	.other-month{
+		color: $gray-light;
+		background-color: $gray-lighter;
+	}
+	.day {
+		cursor: pointer;
+		border-color: $gray-light;
+		border-style: solid none none solid;
+		border-width: 1px;
+		height: 60px;
+		padding: 1%;
+	}
+	.left-chevron {
+		float: left;
+	}
+	.left-chevron:before{
+		content: "<"
+	}
+	.right-chevron {
+		float: right;
+	}
+	.right-chevron:before{
+		content: ">"
+	}		
+}
