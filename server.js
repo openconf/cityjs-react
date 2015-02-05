@@ -16,7 +16,7 @@ require.extensions['.less'] = function(){
 	return null;
 } 
 
-var clientAppMiddleware = require("./src/main");
+var clientAppMiddleware = require("./src/main").middleware;
 
 app.use(session({keys:['app']}))
 
@@ -57,20 +57,21 @@ app.get("/api/events", function(req, res){
 });
 
 app.post("/api/events", function(req, res){
-	var User = req.body;
-	User.id = Users.length;
-	Users.push(User)
-	res.json(User);
+	var Event = req.body;
+	Event.id = Events.length;
+	Event.logo = "http://placehold.it/100x100";
+	Events.push(Event)
+	res.json(Event);
 });
 
 app.put("/api/users/:id", function(req, res){
-	var newUser = req.body;
-	Users[newUser.id] = newUser;
-	res.json(newUser);
+	var newEvent = req.body;
+	Events[newEvent.id] = newEvent;
+	res.json(newEvent);
 });
 
 app.get("/api/users/:id", function(req, res){
-	res.json(Users[req.params.id]);
+	res.json(Events[req.params.id]);
 });
 //*******************************************
 

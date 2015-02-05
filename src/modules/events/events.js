@@ -13,10 +13,36 @@ var EventFormStore = require('./EventFormStore');
 var getEvents = PromisePiper().get('/api/events').emit('events:get');
 
 
-module.exports = [
+module.exports = function(app){
+	app.appActions.create("submit:newEvent")
+	.validate({
+		type: "object",
+		properties:{
+			name: {
+				type: "string",
+				maxLength: 10
+			},
+			description:{
+				type: "string"
+			},
+			date:{
+				type: "object"
+			}			
+		},
+		required: ['name', 'description', 'date']
+
+	})
+	.post('/api/events')
+	.emit('events:add')
+	.log()
+	.transitionTo('events')
+	.catchEmit('submit:newEvent:rejected');
+
+	return [
 	<DefaultRoute handler = {require('./EventsComponent')} action={getEvents} stores={EventsStore} />
 	,<Route name="events" path="events" handler = {require('./EventsComponent')} action={getEvents} stores={EventsStore}/>
 	,<Route name="createEvent" path="event/create" handler = {require('./EventFormComponent')} action={getEvents} stores={EventFormStore}/>
 	,<Route name="event" path="event/:id" handler = {require('./EventComponent')} />
 	]
+}
 		

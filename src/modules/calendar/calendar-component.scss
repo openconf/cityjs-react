@@ -1,13 +1,13 @@
 @import "bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
 .calendar-component {
+	table{
+		width: 100%;
+		border-collapse: collapse;
+	}
 	width: 100%;
-	border-color: $gray-light;
-	border-style: none solid solid none;
-	border-width: 1px;
 	.month-day{
 		width: 14.28%;
-		display: inline-block;
 	}
 	.focused {
 		background-color: $brand-success;
@@ -16,13 +16,15 @@
 		color: $gray-light;
 		background-color: $gray-lighter;
 	}
-	.day {
+	td.day {
+		vertical-align: top;
 		cursor: pointer;
-		border-color: $gray-light;
-		border-style: solid none none solid;
-		border-width: 1px;
+		border: 1px solid $gray-light;
 		height: 60px;
 		padding: 1%;
+		.date {
+			position: absolute;
+		}
 	}
 	.left-chevron {
 		float: left;

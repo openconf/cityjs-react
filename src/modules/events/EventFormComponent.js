@@ -2,8 +2,43 @@ var React = require('react');
 var Router = require('react-router');
 var Navigation = Router.Navigation;
 var ContextMixin = require("../../../lib/grailjs/ContextMixin");
-var CalendarComponent = require('../calendar/CalendarComponent');
+var CalendarComponent = require('../calendar/CalendarComponent')(dayItem);
 var moment = require('moment');
+
+
+function dayItem(day){
+  // TODO: performance degradation
+  if(this.props.events){
+    var dayEvents = this.props.events.reduce(function(events, event){
+      if(day.isSame(moment(event.date).startOf('day'))) events.push(event);
+      return events;
+    },[]);
+  }
+  return <div>
+    <span className="date">
+      {day.date()}
+    </span>
+    {dayEvents.map(function(event){
+      return <div className="event text-right">{event.name}</div>
+    })}
+  </div>
+}
+
+function formErrors(errors){
+  if(!errors) return;
+  if(Array.isArray(errors)) {
+    return <ul>
+          {errors.map(function(error){
+            return <li>{error.message}</li>
+          })}
+        </ul>
+  }
+  if(errors.message){
+    return <ul>
+        <li>{errors.message}</li>
+      </ul>
+  }
+}
 
 module.exports = React.createClass({
   displayName: "EventFormComponent",
@@ -27,14 +62,10 @@ module.exports = React.createClass({
     this.context.doAction('submit:newEvent', this.state.data);
   },
   render: function () {
-    var errors = this.state.errors && <ul>
-          {this.state.errors.map(function(error){
-            return <li>{error.varName} - {error.type}</li>
-          })}
-        </ul>;
+
     return (
       <form className="User">
-        {errors}
+        {formErrors(this.state.errors)}
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input type="text" name="name" className="form-control" valueLink={this.linkDataState('name')} placeholder="name" />
