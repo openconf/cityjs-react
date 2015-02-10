@@ -5,8 +5,6 @@ var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
 var Promise = require('es6-promise').Promise;
 
-var ReactRouterAdapter = require("../lib/grailjs/ReactRouterAdapter");
-
 
 require("./styles/main.scss");
 require('./config');
